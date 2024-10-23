@@ -1,12 +1,16 @@
+// src/routes/playerRoutes.js
 const express = require('express');
-const playerController = require('../controllers/playerController.js');
+const playerController = require('../controllers/playerController');
+const authenticate = require('../middleware/authMiddleware');
 const router = express.Router();
 
-// Definir las rutas
-router.get('/', playerController.getAllPlayers); // Obtener todos los jugadores
-router.get('/:id', playerController.getPlayerById); // Obtener un jugador por ID
-router.post('/', playerController.createPlayer); // Crear un nuevo jugador
-router.put('/:id', playerController.updatePlayer); // Actualizar un jugador por ID
-router.delete('/:id', playerController.deletePlayer); // Eliminar un jugador por ID
+// Aplicar autenticación a todas las rutas de jugadores
+router.use(authenticate);
+
+router.get('/', playerController.getAllPlayers);
+router.get('/:id', playerController.getPlayerById);
+router.post('/', playerController.createPlayer);
+router.put('/:id', playerController.updatePlayer);
+router.delete('/:id', playerController.deletePlayer);
 
 module.exports = router;
