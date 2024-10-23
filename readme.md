@@ -70,7 +70,7 @@ Este proyecto es una aplicación web para gestionar un listado de jugadores de F
 - npm start
 
 5. **EndPoints Get, Post, Put, Deleted**:
-- IMPORTANTE USAR TOKEN AL LOGEARSE PARA USAR LAS DEMAS FUNCIONALIDADES 
+- IMPORTANTE CREAR USUARIO. USAR TOKEN AL LOGEARSE PARA USAR LAS DEMAS FUNCIONALIDADES 
 - http://localhost:3000/auth/login
 - http://localhost:3000/auth/register
 - http://localhost:3000/players
