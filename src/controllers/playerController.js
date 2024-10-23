@@ -3,14 +3,26 @@
 const playerService = require('../services/player.services');
 
 // Obtener todos los jugadores
+// src/controllers/playerController.js
 exports.getAllPlayers = async (req, res) => {
+  const { page = 1, limit = 10 } = req.query; // Obtener los parámetros de la consulta
+
+  const offset = (page - 1) * limit; // Calcular el desplazamiento
+
   try {
-    const players = await playerService.getAllPlayers();
-    res.json(players);
+    const { count, rows } = await playerService.getAllPlayers(limit, offset); // Pasar limit y offset a la función de servicio
+
+    res.json({
+      totalItems: count,
+      totalPages: Math.ceil(count / limit),
+      currentPage: Number(page),
+      players: rows,
+    });
   } catch (error) {
     res.status(500).json({ message: 'Error al obtener los jugadores', error: error.message });
   }
 };
+
 
 // Obtener un jugador por ID
 exports.getPlayerById = async (req, res) => {
