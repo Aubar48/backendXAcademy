@@ -1,8 +1,10 @@
 // src/controllers/authController.js
 const authService = require('../services/auth.services');
+const { validateRegister } = require('../validations/registerValidation');
+const { validateLogin } = require('../validations/loginValidation');
 
 // Registro de usuario
-exports.register = async (req, res) => {
+exports.register = [validateRegister, async (req, res) => {
   const { username, password } = req.body;
 
   try {
@@ -11,15 +13,11 @@ exports.register = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: 'Error al registrar el usuario', error });
   }
-};
+}];
 
 // Login de usuario
-exports.login = async (req, res) => {
+exports.login = [validateLogin, async (req, res) => {
   const { username, password } = req.body;
-
-  if (!username || !password) {
-    return res.status(400).json({ error: 'Username and password are required' });
-}
 
   try {
     const token = await authService.login(username, password);
@@ -27,4 +25,4 @@ exports.login = async (req, res) => {
   } catch (error) {
     res.status(401).json({ message: error.message });
   }
-};
+}];
