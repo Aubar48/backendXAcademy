@@ -1,13 +1,18 @@
-let createError = require('http-errors');
-let express = require('express');
-let path = require('path');
-let cookieParser = require('cookie-parser');
-let logger = require('morgan');
-let cors = require('cors');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const cors = require('cors');
+const playerRoutes = require('./src/routes/playerRoutes'); // Importar rutas de jugadores
 const sequelize = require('./src/config/dabase');
-const Player = require('./src/models/player'); // Asegúrate de que esté correctamente escrito
+const Player = require('./src/models/playerModels'); // Asegúrate de que esté correctamente escrito
+const errorHandler = require('./src/middleware/errorHandler'); // Importar error handler
 
-var app = express();
+const app = express();
+
+// Agregar las rutas de jugadores
+app.use('/players', playerRoutes);
 
 // Middleware
 app.use(cors());
@@ -18,20 +23,12 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
   next(createError(404));
 });
 
-// error handler
-app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
+// Usar el middleware de manejo de errores
+app.use(errorHandler);
 
 // Verificar conexión a la base de datos
 async function initialize() {
@@ -52,3 +49,5 @@ async function initialize() {
 initialize();
 
 module.exports = app;
+
+
