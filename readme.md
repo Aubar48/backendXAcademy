@@ -1,4 +1,5 @@
 # Challenge XAcademy
+<figure><img src="./mock/Santex.png" alt="logo" style="height: 200px;"></figure>
 
 ## Descripción
 
@@ -53,7 +54,6 @@ Este proyecto es una aplicación web para gestionar un listado de jugadores de F
 
 1. **Clona el repositorio**:
 
--   ```bash
 -   git clone https://github.com/Aubar48/backendXAcademy
 -   cd backendXAcademy
 
