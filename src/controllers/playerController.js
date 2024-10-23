@@ -1,12 +1,14 @@
-const Player = require('../models/playerModels');
+// src/controllers/playerController.js
+
+const playerService = require('../services/player.services');
 
 // Obtener todos los jugadores
 exports.getAllPlayers = async (req, res) => {
   try {
-    const players = await Player.findAll();
+    const players = await playerService.getAllPlayers();
     res.json(players);
   } catch (error) {
-    res.status(500).json({ message: 'Error al obtener los jugadores', error });
+    res.status(500).json({ message: 'Error al obtener los jugadores', error: error.message });
   }
 };
 
@@ -14,23 +16,23 @@ exports.getAllPlayers = async (req, res) => {
 exports.getPlayerById = async (req, res) => {
   const { id } = req.params;
   try {
-    const player = await Player.findByPk(id);
+    const player = await playerService.getPlayerById(id);
     if (!player) {
       return res.status(404).json({ message: 'Jugador no encontrado' });
     }
     res.json(player);
   } catch (error) {
-    res.status(500).json({ message: 'Error al obtener el jugador', error });
+    res.status(500).json({ message: 'Error al obtener el jugador', error: error.message });
   }
 };
 
 // Crear un nuevo jugador
 exports.createPlayer = async (req, res) => {
   try {
-    const player = await Player.create(req.body);
+    const player = await playerService.createPlayer(req.body);
     res.status(201).json(player);
   } catch (error) {
-    res.status(500).json({ message: 'Error al crear el jugador', error });
+    res.status(500).json({ message: 'Error al crear el jugador', error: error.message });
   }
 };
 
@@ -38,14 +40,13 @@ exports.createPlayer = async (req, res) => {
 exports.updatePlayer = async (req, res) => {
   const { id } = req.params;
   try {
-    const player = await Player.findByPk(id);
-    if (!player) {
-      return res.status(404).json({ message: 'Jugador no encontrado' });
-    }
-    await player.update(req.body);
+    const player = await playerService.updatePlayer(id, req.body);
     res.json(player);
   } catch (error) {
-    res.status(500).json({ message: 'Error al actualizar el jugador', error });
+    if (error.message === 'Jugador no encontrado') {
+      return res.status(404).json({ message: error.message });
+    }
+    res.status(500).json({ message: 'Error al actualizar el jugador', error: error.message });
   }
 };
 
@@ -53,13 +54,12 @@ exports.updatePlayer = async (req, res) => {
 exports.deletePlayer = async (req, res) => {
   const { id } = req.params;
   try {
-    const player = await Player.findByPk(id);
-    if (!player) {
-      return res.status(404).json({ message: 'Jugador no encontrado' });
-    }
-    await player.destroy();
-    res.json({ message: 'Jugador eliminado correctamente' });
+    const result = await playerService.deletePlayer(id);
+    res.json(result);
   } catch (error) {
-    res.status(500).json({ message: 'Error al eliminar el jugador', error });
+    if (error.message === 'Jugador no encontrado') {
+      return res.status(404).json({ message: error.message });
+    }
+    res.status(500).json({ message: 'Error al eliminar el jugador', error: error.message });
   }
 };
