@@ -50,7 +50,7 @@ Este proyecto es una aplicación web para gestionar un listado de jugadores de F
 
 ## Instalación
 
-### Backend
+### Backend && Frontend
 
 1. **Clona el repositorio**:
 
