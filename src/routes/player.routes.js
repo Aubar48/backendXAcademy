@@ -5,7 +5,7 @@ const authenticate = require('../middleware/authMiddleware');
 const router = express.Router();
 
 // Aplicar autenticación a todas las rutas de jugadores
-router.use(authenticate);
+//router.use(authenticate);
 router.get('/', playerController.getAllPlayers);
 router.get('/:id', playerController.getPlayerById);
 router.post('/', playerController.createPlayer);
