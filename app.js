@@ -16,7 +16,9 @@ const authRoutes = require('./src/routes/auth.routes');
 const app = express();
 
 // Middleware
+
 app.use(cors());
+
 app.use(express.json()); // Para parsear JSON en las solicitudes
 app.use(logger('dev'));
 app.use(express.urlencoded({ extended: false }));

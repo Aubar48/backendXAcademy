@@ -5,17 +5,17 @@ const authenticate = require('../middleware/authMiddleware');
 const router = express.Router();
 
 // Aplicar autenticación a todas las rutas de jugadores
-//router.use(authenticate);
-router.get('/', playerController.getAllPlayers);
-router.get('/:id', playerController.getPlayerById);
-router.post('/', playerController.createPlayer);
-router.put('/:id', playerController.updatePlayer);
-router.delete('/:id', playerController.deletePlayer);
+
+router.get('/', authenticate, playerController.getAllPlayers);
+router.get('/:id', authenticate, playerController.getPlayerById);
+router.post('/', authenticate, playerController.createPlayer);
+router.put('/:id', authenticate, playerController.updatePlayer);
+router.delete('/:id', authenticate, playerController.deletePlayer);
 
 // Ruta para descargar los jugadores en formato CSV
-router.get('/download/csv', playerController.downloadPlayersCSV);
+router.get('/download/csv', authenticate, playerController.downloadPlayersCSV);
 // Ruta para convertir CSV a Excel
-router.get('/convert/csv-to-excel', playerController.convertCsvToExcel);
+router.get('/convert/csv-to-excel', authenticate, playerController.convertCsvToExcel);
 
 
 
