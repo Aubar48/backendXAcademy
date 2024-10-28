@@ -199,3 +199,23 @@ exports.convertCsvToExcel = async (req, res) => {
     res.status(500).json({ message: 'Error al convertir CSV a Excel', error: error.message });
   }
 };
+
+// Buscar jugadores
+exports.searchPlayers = async (req, res) => {
+  const { query, page = 1, limit = 10 } = req.query; // Obtener los parámetros de la consulta
+  const offset = (page - 1) * limit; // Calcular el desplazamiento
+
+  try {
+    // Asegúrate de que el servicio tenga un método para buscar jugadores
+    const { count, rows } = await playerService.searchPlayers(query, limit, offset);
+
+    res.json({
+      totalItems: count,
+      totalPages: Math.ceil(count / limit),
+      currentPage: Number(page),
+      players: rows,
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Error al buscar jugadores', error: error.message });
+  }
+};

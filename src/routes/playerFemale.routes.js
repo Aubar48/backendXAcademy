@@ -10,6 +10,7 @@ router.get('/:id', authenticate, playerController.getPlayerById);
 router.post('/', authenticate, playerController.createPlayer);
 router.put('/:id', authenticate, playerController.updatePlayer);
 router.delete('/:id', authenticate, playerController.deletePlayer);
+router.get('/search',authenticate, playerController.searchPlayers);
 
 // Ruta para descargar los jugadores en formato CSV
 router.get('/download/csv', authenticate, playerController.downloadPlayersCSV);
