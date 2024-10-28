@@ -189,12 +189,16 @@ exports.convertCsvToExcel = async (req, res) => {
 
 // Buscar jugadores
 exports.searchPlayers = async (req, res) => {
-  const { query, page = 1, limit = 10 } = req.query; // Obtener los parámetros de la consulta
+  const { page = 1, limit = 10, ...queryParams } = req.query; // Obtener todos los parámetros de búsqueda dinámicos
   const offset = (page - 1) * limit; // Calcular el desplazamiento
 
   try {
-    // Asegúrate de que el servicio tenga un método para buscar jugadores
-    const { count, rows } = await playerService.searchPlayers(query, limit, offset);
+    // Llama al servicio con los parámetros de búsqueda y paginación
+    const { count, rows } = await playerService.searchPlayers({
+      ...queryParams, // Parámetros de búsqueda específicos
+      limit, 
+      offset
+    });
 
     res.json({
       totalItems: count,

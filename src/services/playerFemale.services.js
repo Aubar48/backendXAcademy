@@ -66,7 +66,7 @@ const deletePlayer = async (id) => {
 };
 
 // Función para buscar jugadores por criterios
-const searchPlayers = async (searchParams) => {
+const searchPlayers = async ({ limit, offset, ...searchParams }) => {
   try {
     const players = await PlayerFemale.findAndCountAll({
       where: {
@@ -132,6 +132,8 @@ const searchPlayers = async (searchParams) => {
         ...(searchParams.goalkeeping_reflexes && { goalkeeping_reflexes: searchParams.goalkeeping_reflexes }),
         ...(searchParams.goalkeeping_speed && { goalkeeping_speed: searchParams.goalkeeping_speed }),
       },
+      limit,
+      offset
     });
     return players; // Retorna el objeto que contiene el conteo y las filas
   } catch (error) {
