@@ -8,8 +8,8 @@ const router = express.Router();
 
 router.get('/', authenticate, playerController.getAllPlayers);
 router.get('/:id', authenticate, playerController.getPlayerById);
-router.post('/', authenticate, playerController.createPlayer);
-router.put('/:id', authenticate, playerController.updatePlayer);
+router.post('/create', authenticate, playerController.createPlayer);
+router.put('/edit/:id', authenticate, playerController.updatePlayer);
 router.delete('/:id', authenticate, playerController.deletePlayer);
 router.get('/search',authenticate, playerController.searchPlayers);
 

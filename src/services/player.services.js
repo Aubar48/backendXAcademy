@@ -29,23 +29,37 @@ const getPlayerById = async (id) => {
 };
 
 // Crear un nuevo jugador
+
+
 const createPlayer = async (playerData) => {
-  try {
-    return await Player.create(playerData);
-  } catch (error) {
-    throw new Error('Error al crear el jugador: ' + error.message);
-  }
+  const essentialData = {
+      fifa_version: playerData.fifa_version,
+      fifa_update: playerData.fifa_update,
+      player_face_url: playerData.player_face_url,
+      long_name: playerData.long_name,
+      player_positions: playerData.player_positions,
+      overall: playerData.overall,
+      potential: playerData.potential,
+      age: playerData.age,
+  };
+
+  return await Player.create(essentialData);
 };
+
 
 // Actualizar un jugador por ID
 const updatePlayer = async (id, playerData) => {
   try {
+    // Buscar el jugador por ID
     const player = await Player.findByPk(id);
     if (!player) {
       throw new Error('Jugador no encontrado');
     }
-    await player.update(playerData);
-    return player;
+
+    // Actualizar los atributos del jugador
+    await player.update(playerData); // Utiliza el método update proporcionado por Sequelize
+
+    return player; // Retornar el jugador actualizado
   } catch (error) {
     throw new Error('Error al actualizar el jugador: ' + error.message);
   }

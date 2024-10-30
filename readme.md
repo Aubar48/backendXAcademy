@@ -73,15 +73,24 @@ Este proyecto es una aplicación web para gestionar un listado de jugadores de F
 
 5. **EndPoints Get, Post, Put, Deleted**:
 - IMPORTANTE CREAR USUARIO. USAR TOKEN AL LOGEARSE PARA USAR LAS DEMAS FUNCIONALIDADES 
-- http://localhost:3000/auth/login
-- http://localhost:3000/auth/register
-- http://localhost:3000/players
-- http://localhost:3000/players/:id
-- http://localhost:3000/players/download/csv
-- http://localhost:3000/players/convert/csv-to-excel
-- http://localhost:3000/players/?page=11&limit=10
-- http://localhost:3000/female
-- http://localhost:3000/female/:id
-- http://localhost:3000/female/download/csv
-- http://localhost:3000/female/convert/csv-to-excel
-- http://localhost:3000/female/?page=11&limit=10
+- *Post:* http://localhost:3000/auth/login
+- *Post:* http://localhost:3000/auth/register
+- *Post:* http://localhost:3000/auth/logout
+
+- *Get:* http://localhost:3000/players
+- *Get:* http://localhost:3000/players/search
+- *Get:* http://localhost:3000/players/?page=11&limit=10
+- *Get:* http://localhost:3000/players/download/csv
+- *Get:* http://localhost:3000/players/convert/csv-to-excel
+- *Post:* http://localhost:3000/players/create
+- *Put:* http://localhost:3000/players/edit/:id
+- *Delete:* http://localhost:3000/players/:id
+
+- *Get:* http://localhost:3000/female
+- *Get:* http://localhost:3000/female/search
+- *Get:* http://localhost:3000/female/?page=11&limit=10
+- *Get:* http://localhost:3000/female/download/csv
+- *Get:* http://localhost:3000/female/convert/csv-to-excel
+- *Post:* http://localhost:3000/female/create
+- *Put:* http://localhost:3000/female/edit/:id
+- *Delete:* http://localhost:3000/female/:id

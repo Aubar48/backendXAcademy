@@ -1,5 +1,6 @@
 // src/controllers/playerController.js
 const playerService = require('../services/player.services');
+const { validationResult } = require('express-validator'); // Asegúrate de que esta línea esté presente
 
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 const path = require('path');
@@ -44,18 +45,33 @@ exports.getPlayerById = async (req, res) => {
 };
 
 // Crear un nuevo jugador
+
+// Tu controlador para crear jugadores
 exports.createPlayer = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  
   try {
-    const player = await playerService.createPlayer(req.body);
-    res.status(201).json(player);
+    const newPlayer = await playerService.createPlayer(req.body);
+    return res.status(201).json(newPlayer);
   } catch (error) {
-    res.status(500).json({ message: 'Error al crear el jugador', error: error.message });
+    console.error('Error creating player:', error);
+    return res.status(500).json({ message: 'Error creating player' });
   }
 };
 
 // Actualizar un jugador por ID
 exports.updatePlayer = async (req, res) => {
   const { id } = req.params;
+
+  // Validar los resultados de las validaciones
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   try {
     const player = await playerService.updatePlayer(id, req.body);
     res.json(player);
