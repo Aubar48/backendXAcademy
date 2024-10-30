@@ -8,7 +8,7 @@ const fs = require('fs');
 
 // Obtener todos los jugadores femeninos
 exports.getAllPlayers = async (req, res) => {
-  const { page = 1, limit = 10 } = req.query; // Obtener los parámetros de la consulta
+  const { page = 1, limit = 100 } = req.query; // Obtener los parámetros de la consulta
 
   const offset = (page - 1) * limit; // Calcular el desplazamiento
 
