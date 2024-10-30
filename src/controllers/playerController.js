@@ -11,7 +11,7 @@ const fs = require('fs');
 // Obtener todos los jugadores
 // src/controllers/playerController.js
 exports.getAllPlayers = async (req, res) => {
-  const { page = 1, limit = 10 } = req.query; // Obtener los parámetros de la consulta
+  const { page = 1, limit = 100 } = req.query; // Obtener los parámetros de la consulta
 
   const offset = (page - 1) * limit; // Calcular el desplazamiento
 
@@ -99,7 +99,7 @@ exports.deletePlayer = async (req, res) => {
 
 exports.downloadPlayersCSV = async (req, res) => {
   try {
-    const limit = req.query.limit || 10; // Valor predeterminado de 10
+    const limit = req.query.limit || 10000; // Valor predeterminado de 10
     const offset = req.query.offset || 0; // Valor predeterminado de 0
     
     const players = await playerService.getAllPlayers(limit, offset); // Obtener la lista de jugadores
