@@ -44,19 +44,11 @@ app.use(errorHandler);
 async function initialize() {
   try {
     await sequelize.authenticate();
-    console.log('Conexión con la base de datos establecida correctamente.');
-
     // Sincronizar el modelo con la base de datos
     await Player.sync();
-    console.log('El modelo Player está sincronizado con la tabla `players`.');
-
     // Sincronizar el modelo con la base de datos
     await PlayerFemale.sync();
-    console.log('El modelo PlayerFemale está sincronizado con la tabla `playersFemale`.');
-
-
     await User.sync();
-    console.log('El modelo User está sincronizado con la tabla `users`.');
     // Aquí puedes agregar lógica adicional, como consultas a la base de datos
   } catch (error) {
     console.error('No se pudo conectar a la base de datos:', error);

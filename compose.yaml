@@ -28,7 +28,7 @@ services:
     volumes:
       - db-data:/var/lib/mysql
     ports:
-      - 3306:3306  # Puerto para conectarse a MySQL desde fuera del contenedor
+      - "3307:3306"  # Cambia el puerto de la izquierda (host) a 3307 u otro disponible
 
 volumes:
   db-data:
