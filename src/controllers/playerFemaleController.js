@@ -81,7 +81,7 @@ exports.deletePlayer = async (req, res) => {
 // Descargar jugadoras en formato CSV
 exports.downloadPlayersCSV = async (req, res) => {
   try {
-    const limit = req.query.limit || 20000; // Valor predeterminado de 10
+    const limit = req.query.limit || 181347; // Valor predeterminado de 10
     const offset = req.query.offset || 0; // Valor predeterminado de 0
     
     const playersFemale = await playerService.getAllPlayers(limit, offset); // Obtener la lista de jugadoras
