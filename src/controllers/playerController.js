@@ -99,7 +99,7 @@ exports.deletePlayer = async (req, res) => {
 
 exports.downloadPlayersCSV = async (req, res) => {
   try {
-    const limit = req.query.limit || 161570; // Valor predeterminado de 10
+    const limit = req.query.limit || 30000; // Valor predeterminado de 10
     const offset = req.query.offset || 0; // Valor predeterminado de 0
     
     const players = await playerService.getAllPlayers(limit, offset); // Obtener la lista de jugadores
