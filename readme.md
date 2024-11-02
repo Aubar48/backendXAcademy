@@ -10,16 +10,18 @@ Este proyecto es una aplicación web para gestionar un listado de jugadores de F
 ### Backend
 - **Node.js**
 - **Express.js**
-- **Sequelize** (ORM para la base de datos)
-- **MySQL** (Base de datos)
-- **JSON Web Token (JWT)** para autenticación
-- **express-validator** para validaciones de entrada
+- **Sequelize** (ORM para la base de datos).
+- **MySQL** (Base de datos).
+- **JSON Web Token (JWT)** para autenticación.
+- **express-validator** para validaciones de entrada.
 
 ### Frontend
 - **Angular**
-- **Angular Material** (opcional para UI)
-- **Reactive Forms** para validaciones en el frontend
-- **Chart.js** para visualización de habilidades de los jugadores
+- **Angular Material** (opcional para UI).
+- **Reactive Forms** Para validaciones en el frontend.
+- **Chart.js** Para visualización de habilidades de los jugadores.
+- **SweetAlert 2** Un reemplazo personalizable y accesible para los cuadros emergentes.
+
 
 ## Funcionalidades
 
