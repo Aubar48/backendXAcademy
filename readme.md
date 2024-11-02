@@ -59,6 +59,11 @@ Este proyecto es una aplicación web para gestionar un listado de jugadores de F
 -   git clone https://github.com/Aubar48/backendXAcademy
 -   cd backendXAcademy
 
+1. A. Instalar base de datos.
+- En la carpeta Mock tenes tres archivos: create_db_and_user_table, fifa_female_players,
+fifa_male_players, para la base de datos, ejecutar los tres scripts.
+
+
 2. **Instala dependencias**
 
 - npm install
