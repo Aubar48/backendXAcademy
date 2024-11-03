@@ -239,3 +239,13 @@ exports.searchPlayers = async (req, res) => {
     res.status(500).json({ message: 'Error al buscar jugadores', error: error.message });
   }
 };
+
+exports.importarDatos = async (req, res) => {
+  try {
+      const message = await playerService.importarDatosDesdeCSV('./src/uploads/players.csv'); // Cambia 'datos.csv' si es necesario
+      res.status(200).json({ message });
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Error al importar datos' });
+  }
+};

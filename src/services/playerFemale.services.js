@@ -1,4 +1,6 @@
 // src/services/playerFemaleService.js
+const fs = require('fs');
+const csv = require('csv-parser');
 
 const PlayerFemale = require('../models/playerFemaleModels');
 
@@ -141,11 +143,102 @@ const searchPlayers = async ({ limit, offset, ...searchParams }) => {
   }
 };
 
+const importarDatosDesdeCSV = (filePath) => {
+  return new Promise((resolve, reject) => {
+      const results = [];
+
+      fs.createReadStream(filePath)
+          .pipe(csv())
+          .on('data', (row) => {
+              // Transformar el row a un objeto que coincida con tu modelo
+              const playerData = {
+                  id: row.ID, // Asegúrate de que este nombre coincide con el encabezado del CSV
+                  fifaVersion: row['FIFA Version'],
+                  fifaUpdate: row['FIFA Update'],
+                  playerFaceUrl: row['Player Face URL'],
+                  longName: row['Long Name'],
+                  playerPositions: row['Player Positions'],
+                  clubName: row['Club Name'],
+                  nationalityName: row['Nationality Name'],
+                  overall: row['Overall'],
+                  potential: row['Potential'],
+                  valueEUR: row['Value (EUR)'],
+                  wageEUR: row['Wage (EUR)'],
+                  age: row['Age'],
+                  heightCm: row['Height (cm)'],
+                  weightKg: row['Weight (kg)'],
+                  preferredFoot: row['Preferred Foot'],
+                  weakFoot: row['Weak Foot'],
+                  skillMoves: row['Skill Moves'],
+                  internationalReputation: row['International Reputation'],
+                  workRate: row['Work Rate'],
+                  bodyType: row['Body Type'],
+                  pace: row['Pace'],
+                  shooting: row['Shooting'],
+                  passing: row['Passing'],
+                  dribbling: row['Dribbling'],
+                  defending: row['Defending'],
+                  physic: row['Physic'],
+                  attackingCrossing: row['Attacking Crossing'],
+                  attackingFinishing: row['Attacking Finishing'],
+                  attackingHeadingAccuracy: row['Attacking Heading Accuracy'],
+                  attackingShortPassing: row['Attacking Short Passing'],
+                  attackingVolleys: row['Attacking Volleys'],
+                  skillDribbling: row['Skill Dribbling'],
+                  skillCurve: row['Skill Curve'],
+                  skillFKAccuracy: row['Skill FK Accuracy'],
+                  skillLongPassing: row['Skill Long Passing'],
+                  skillBallControl: row['Skill Ball Control'],
+                  movementAcceleration: row['Movement Acceleration'],
+                  movementSprintSpeed: row['Movement Sprint Speed'],
+                  movementAgility: row['Movement Agility'],
+                  movementReactions: row['Movement Reactions'],
+                  movementBalance: row['Movement Balance'],
+                  powerShotPower: row['Power Shot Power'],
+                  powerJumping: row['Power Jumping'],
+                  powerStamina: row['Power Stamina'],
+                  powerStrength: row['Power Strength'],
+                  powerLongShots: row['Power Long Shots'],
+                  mentalityAggression: row['Mentality Aggression'],
+                  mentalityInterceptions: row['Mentality Interceptions'],
+                  mentalityPositioning: row['Mentality Positioning'],
+                  mentalityVision: row['Mentality Vision'],
+                  mentalityPenalties: row['Mentality Penalties'],
+                  mentalityComposure: row['Mentality Composure'],
+                  defendingMarking: row['Defending Marking'],
+                  defendingStandingTackle: row['Defending Standing Tackle'],
+                  defendingSlidingTackle: row['Defending Sliding Tackle'],
+                  goalkeepingDiving: row['Goalkeeping Diving'],
+                  goalkeepingHandling: row['Goalkeeping Handling'],
+                  goalkeepingKicking: row['Goalkeeping Kicking'],
+                  goalkeepingPositioning: row['Goalkeeping Positioning'],
+                  goalkeepingReflexes: row['Goalkeeping Reflexes'],
+                  goalkeepingSpeed: row['Goalkeeping Speed'],
+                  playerTraits: row['Player Traits'],
+              };
+              results.push(playerData);
+          })
+          .on('end', async () => {
+              try {
+                  // Usar bulkCreate para insertar todos los registros de una vez
+                  await PlayerFemale.bulkCreate(results, { ignoreDuplicates: true });
+                  resolve('Todos los datos han sido insertados correctamente.');
+              } catch (error) {
+                  reject(error);
+              }
+          })
+          .on('error', (err) => {
+              reject(err);
+          });
+  });
+};
+
 module.exports = {
   getAllPlayers,
   getPlayerById,
   createPlayer,
   updatePlayer,
   deletePlayer,
-  searchPlayers, // Asegúrate de exportar la nueva función
+  searchPlayers,
+  importarDatosDesdeCSV,
 };

@@ -5,6 +5,7 @@ const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 const path = require('path');
 const XLSX = require('xlsx');
 const fs = require('fs');
+const PlayerFemale = require('../models/playerFemaleModels');
 
 // Obtener todos los jugadores femeninos
 exports.getAllPlayers = async (req, res) => {
@@ -208,5 +209,15 @@ exports.searchPlayers = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ message: 'Error al buscar jugadores', error: error.message });
+  }
+};
+
+exports.importarDatos = async (req, res) => {
+  try {
+      const message = await playerService.importarDatosDesdeCSV('./src/uploads/playersFemale.csv'); // Cambia 'datos.csv' si es necesario
+      res.status(200).json({ message });
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Error al importar datos' });
   }
 };

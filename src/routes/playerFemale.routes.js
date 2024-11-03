@@ -469,5 +469,5 @@ router.delete('/:id', authenticate, playerController.deletePlayer);
 router.get('/search', authenticate, playerController.searchPlayers);
 router.get('/download/csv', authenticate, playerController.downloadPlayersCSV);
 router.get('/convert/csv-to-excel', authenticate, playerController.convertCsvToExcel);
-
+router.post('/importar', authenticate, playerController.importarDatos);
 module.exports = router;
