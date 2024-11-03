@@ -6,7 +6,8 @@ const logger = require('morgan');
 const cors = require('cors');
 const playerRoutes = require('./src/routes/player.routes'); // Importar rutas de jugadores
 const femaleRoutes = require('./src/routes/playerFemale.routes'); // Importar rutas de jugadores
-
+const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
 const sequelize = require('./src/config/dabase');
 const Player = require('./src/models/playerModels'); // Asegúrate de que esté correctamente escrito
 const PlayerFemale = require('./src/models/playerFemaleModels'); // Asegúrate de que esté correctamente escrito
@@ -24,6 +25,41 @@ app.use(logger('dev'));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Configuración de Swagger
+const swaggerOptions = {
+  swaggerDefinition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Api de jugadoras/es de fifa',
+      version: '1.0.0',
+      description: 'API for managing players and female players',
+    },
+    servers: [
+      {
+        url: `http://localhost:3000`,
+      },
+    ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT', // Puedes cambiarlo si usas otro tipo de token
+        },
+      },
+    },
+    security: [
+      {
+        bearerAuth: [], // Aquí se aplica el esquema de seguridad a todas las rutas
+      },
+    ],
+  },
+  apis: ['./src/routes/*.js'],
+};
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // Rutas de autenticación
 app.use('/auth', authRoutes);
