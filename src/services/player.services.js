@@ -106,7 +106,7 @@ const searchPlayers = async ({ limit, offset, ...searchParams }) => {
 const importarDatosDesdeCSV = (filePath) => {
   return new Promise((resolve, reject) => {
     const results = [];
-    const limit = 100;
+    const limit = 30000;
 
     fs.createReadStream(filePath)
       .pipe(csv())
