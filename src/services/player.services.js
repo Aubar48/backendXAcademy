@@ -124,7 +124,7 @@ const importarDatosDesdeCSV = (filePath) => {
       .on('end', async () => {
         try {
           // Suponiendo que 'id' es la clave única que quieres usar para actualizar los datos
-          await PlayerFemale.bulkCreate(results, {
+          await Player.bulkCreate(results, {
             updateOnDuplicate: Object.keys(results[0]) // Actualiza todos los campos que están en el primer objeto
           });
           console.log('Datos importados correctamente');
